@@ -1,0 +1,8 @@
+{
+    "package-name": "djangocms-disqus",
+    "installed-apps": [
+        "connected_accounts",
+        "connected_accounts.providers",
+        "djangocms_disqus"
+    ]
+}

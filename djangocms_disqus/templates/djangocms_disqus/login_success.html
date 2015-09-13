@@ -1,0 +1,16 @@
+{% load staticfiles %}<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Please wait &hellip;</title>
+        <script type="text/javascript">
+            var closeWindow = function () {
+                //setTimeout is necessary coz iOS6 does not allow you to close the popup immediately.
+                setTimeout(function(){ window.close(); }, 300);
+            }
+        </script>
+    </head>
+    <body onload="closeWindow()">
+        <img src="{% static 'img/djangocms_disqus/loader.gif' %}" style="display: block; margin: 50px auto;">
+    </body>
+</html>

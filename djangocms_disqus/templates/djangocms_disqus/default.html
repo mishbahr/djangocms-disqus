@@ -1,0 +1,40 @@
+{% load i18n staticfiles sekizai_tags %}
+
+<div class="disqus-comments">
+    <div id="disqus_thread">
+        {% if instance.load_event == 'click' %}
+            <button class="btn btn-default center-block js-show-comments">
+                {% if instance.button_text %}{{ instance.button_text }}{% else %}{% trans 'Load Comments' %}{% endif %}
+            </button>
+        {% endif %}
+    </div>
+    <noscript>
+        <p>{% trans 'Please enable JavaScript to view the comments powered by Disqus.' %}</p>
+    </noscript>
+</div>
+
+{% addtoblock 'js' %}
+    <script src="{% static 'js/djangocms_disqus/jquery.lazyload.js' %}"></script>
+    <script src="{% static 'js/djangocms_disqus/jquery.disqus.js' %}"></script>
+{% endaddtoblock %}
+
+{% addtoblock 'js' %}
+    <script type="text/javascript">
+        $('.disqus-comments').disqusEmbed({
+            containerId: 'disqus_thread',
+            shortname: '{{ instance.shortname }}',
+            identifier: '{{ request.disqus.identifier }}',
+            url: '{{ request.disqus.url }}',
+            title: '{{ request.disqus.title }}',
+            categoryId: '{{ request.disqus.category_id }}',
+            language: '{{ request.disqus.language_code }}',
+            siteName: '{% firstof instance.site_name request.disqus.current_site.name %}',
+            loginUrl: '{{ request.disqus.get_login_url }}',
+            logoutUrl: '{{ request.disqus.get_logout_url }}',
+            apiKey: '{{ request.disqus.public_key }}',
+            ssoAuth: '{{ request.disqus.get_sso_auth }}',
+            enableSSO: {{ instance.enable_sso|yesno:'true,false'}},
+            triggerEvent: '{{ instance.load_event }}'
+        });
+    </script>
+{% endaddtoblock %}

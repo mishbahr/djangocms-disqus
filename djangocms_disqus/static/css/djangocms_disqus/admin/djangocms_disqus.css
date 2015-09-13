@@ -1,0 +1,25 @@
+.form-row.field-load_event, .form-row.field-enable_sso{
+    border-bottom: none;
+}
+
+.form-row.field-button_text, .form-row.field-site_name {
+    display: none;
+}
+
+.form-row.field-button_text.errors, .form-row.field-site_name.errors, {
+    display: block;
+}
+
+
+.form-row.field-shortname .sync-shortname {
+    margin-left: 7px;
+    cursor: pointer;
+}
+
+.form-row.field-shortname p.help.error {
+    color: #b94a48;
+}
+
+.form-row.field-shortname p.help.success {
+    color: #468847;
+}

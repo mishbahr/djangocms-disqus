@@ -1,0 +1,12 @@
+{% load i18n admin_static %}
+<div class="shortname-widget-wrapper">
+    {{ widget }}
+    <a class="sync-{{ name }}" id="sync_{{ name }}"
+       data-ajax-url="{{ ajax_url }}"
+       data-processing-msg="{% trans 'Sync in Progress. Please wait..' %}"
+       data-complete-msg="{% trans 'Sync Complete' %}"
+       data-sync-error ="{% trans 'Error' %}"
+       data-missing-account-msg="{% trans 'Please choose to a Disqus account or connect to a new account.' %}" >
+        {% trans 'Sync' %}
+    </a>
+</div>

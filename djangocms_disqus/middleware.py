@@ -5,10 +5,10 @@ import json
 import time
 
 from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
-from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils import translation
 
+from .compat import get_current_site
 from .conf import settings
 from .utils import get_gravatar_url, get_model_tuple, int_to_hashid
 

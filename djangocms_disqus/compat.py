@@ -3,6 +3,11 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 
+try:
+    from django.contrib.sites.shortcuts import get_current_site
+except ImportError:
+    from django.contrib.sites.models import get_current_site
+
 
 class JsonResponse(HttpResponse):
 

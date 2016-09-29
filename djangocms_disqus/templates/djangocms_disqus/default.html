@@ -20,21 +20,23 @@
 
 {% addtoblock 'js' %}
     <script type="text/javascript">
-        $('.disqus-comments').disqusEmbed({
-            containerId: 'disqus_thread',
-            shortname: '{{ instance.shortname }}',
-            identifier: '{{ request.disqus.identifier }}',
-            url: '{{ request.disqus.url }}',
-            title: '{{ request.disqus.title }}',
-            categoryId: '{{ request.disqus.category_id }}',
-            language: '{{ request.disqus.language_code }}',
-            siteName: '{% firstof instance.site_name request.disqus.current_site.name %}',
-            loginUrl: '{{ request.disqus.get_login_url }}',
-            logoutUrl: '{{ request.disqus.get_logout_url }}',
-            apiKey: '{{ request.disqus.public_key }}',
-            ssoAuth: '{{ request.disqus.get_sso_auth }}',
-            enableSSO: {{ instance.enable_sso|yesno:'true,false'}},
-            triggerEvent: '{{ instance.load_event }}'
+        $(function() {
+            $('.disqus-comments').disqusEmbed({
+                containerId: 'disqus_thread',
+                shortname: '{{ instance.shortname }}',
+                identifier: '{{ request.disqus.identifier }}',
+                url: '{{ request.disqus.url }}',
+                title: '{{ request.disqus.title }}',
+                categoryId: '{{ request.disqus.category_id }}',
+                language: '{{ request.disqus.language_code }}',
+                siteName: '{% firstof instance.site_name request.disqus.current_site.name %}',
+                loginUrl: '{{ request.disqus.get_login_url }}',
+                logoutUrl: '{{ request.disqus.get_logout_url }}',
+                apiKey: '{{ request.disqus.public_key }}',
+                ssoAuth: '{{ request.disqus.get_sso_auth }}',
+                enableSSO: {{ instance.enable_sso|yesno:'true,false'}},
+                triggerEvent: '{{ instance.load_event }}'
+            });
         });
     </script>
 {% endaddtoblock %}

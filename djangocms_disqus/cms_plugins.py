@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from functools import partial
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.utils.encoding import force_text
 
@@ -58,13 +58,12 @@ class DisqusPlugin(ConnectedAccountAdminMixin, CMSPluginBase):
 
     def get_plugin_urls(self):
         app_label, model_name = get_model_tuple(self.model)
-        return patterns(
-            '',
+        return [
             url(r'^list/forums/$',
                 admin.site.admin_view(self.list_forums),
                 name='{app_label}_{model_name}_list_forums'.format(
                     app_label=app_label, model_name=model_name)),
-        )
+        ]
 
     def get_form(self, request, obj=None, **kwargs):
         kwargs['formfield_callback'] = partial(self.formfield_for_dbfield, obj=obj)

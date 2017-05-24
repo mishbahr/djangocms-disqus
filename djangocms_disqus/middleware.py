@@ -3,6 +3,7 @@ import hashlib
 import hmac
 import json
 import time
+import sys
 
 from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
 from django.template.loader import render_to_string
@@ -112,15 +113,27 @@ class Disqus(object):
         return user
 
     def get_b64encoded_user_data(self):
-        return base64.b64encode(json.dumps(self.get_user_data()))
+        #For python3 the base64 requires bytes not string
+        if(self.is_python_3()):
+            return base64.b64encode(json.dumps(self.get_user_data()).encode('utf-8'))
+        else:
+            return base64.b64encode(json.dumps(self.get_user_data()))
 
     def generate_hmac_sha1_signature(self):
-        return hmac.HMAC(
-            self.secret_key,
+    #For python3 the key requires bytes not string
+        if(self.is_python_3()):
+            return hmac.HMAC(
+            self.secret_key.encode('utf-8'),
             '{user_data} {timestamp}'.format(
                 user_data=self.get_b64encoded_user_data(),
-                timestamp=self.timestamp),
-            hashlib.sha1).hexdigest()
+                timestamp=self.timestamp).encode('utf-8'), hashlib.sha1).hexdigest()
+        else:
+            return hmac.HMAC(
+                self.secret_key,
+                '{user_data} {timestamp}'.format(
+                    user_data=self.get_b64encoded_user_data(),
+                    timestamp=self.timestamp),
+                hashlib.sha1).hexdigest()        
 
     def get_sso_auth(self):
         return '{user_data} {hmac} {timestamp}'.format(
@@ -152,6 +165,9 @@ class Disqus(object):
             redirect_field=REDIRECT_FIELD_NAME,
             next=self.request.path_info,
         )
+
+    def is_python_3(self):
+        return sys.version.split(" ")[0].split(".")[0] =="3"
 
 
 class DisqusMiddleware(object):
